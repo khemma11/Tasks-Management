@@ -21,8 +21,7 @@ public class ManagerAuthFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        filterChain.doFilter(servletRequest, servletResponse);
-        if (user == null || user.getUserType() != UserType.MANAGER) {
+        if (user== null || user.getUserType() != UserType.MANAGER) {
             HttpServletResponse response = (HttpServletResponse) servletResponse;
             response.sendRedirect("/index.jsp");
         } else {

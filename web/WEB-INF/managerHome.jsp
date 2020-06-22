@@ -14,25 +14,32 @@
 </head>
 <body>
 <a href="/logout">LOGOUT</a><br><br>
+<%User user = (User) session.getAttribute("user");%>
 <% List<User> users = (List<User>) request.getAttribute("users");%>
-<% List<Task> tasks = (List<Task>) request.getAttribute("tasks");%>
+<% List<Task> tasks = (List<Task>) request.getAttribute("tasks");
+
+%>
+Welcome <%=user.getName()%><%if (user.getPictureUrl()!=null){%>
+
+ <img src="/image?path=<%=user.getPictureUrl()%>" width="100px"><%}%>
 <div style="width:600px">
     <div style="width: 50%;float: left">
         Add User:
-        <form action="/register" method="post">
+        <form action="/register" method="post" enctype="multipart/form-data">
             <p>Name</p>
-            <input type="text" name="name" placeholder="name">
+            <input type="text" name="name" placeholder="name"/>
             <p>Surname</p>
-            <input type="text" name="surName" placeholder="surName">
+            <input type="text" name="surName" placeholder="surName"/>
             <p>Email</p>
-            <input type="text" name="email" placeholder="email">
+            <input type="text" name="email" placeholder="email"/>
             <p>Password</p>
-            <input type="password" name="password" placeholder="password">
+            <input type="password" name="password" placeholder="password"/>
             <p>User Type</p>
             <select name="userType">
                 <option value="USER">USER</option>
                 <option value="MANAGER">MANAGER</option>
             </select><br><br>
+            <input type="file" name="image"/><br>
             <input type="submit" value="OK"><br><br>
         </form>
     </div>
@@ -55,8 +62,8 @@
             <p>UserID</p>
             <select name="user_id">
                     <%
-                for (User user : users) {%>
-                <option value="<%=user.getId()%>"><%=user.getName()%> <%=user.getSurName()%>
+                for (User user1 : users) {%>
+                <option value="<%=user1.getId()%>"><%=user1.getName()%> <%=user1.getSurName()%>
                 </option>
 
                     <%

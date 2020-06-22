@@ -21,9 +21,8 @@ public class UserAuthFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        filterChain.doFilter(servletRequest, servletResponse);
-        if (user == null || user.getUserType() != UserType.USER) {
+        User user= (User) session.getAttribute("user");
+        if (user== null || user.getUserType() != UserType.USER) {
             HttpServletResponse response = (HttpServletResponse) servletResponse;
             response.sendRedirect("/index.jsp");
         } else {

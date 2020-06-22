@@ -20,11 +20,12 @@ import java.util.List;
 
 public class ManagerHomeServlet extends HttpServlet {
 
-    TaskManager taskManager = new TaskManager();
-    UserManager userManager = new UserManager();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        TaskManager taskManager = new TaskManager();
+        UserManager userManager = new UserManager();
+
         List<Task> alltasks = taskManager.getAllTasks();
         List<User> allUsers = userManager.getAllUser();
         req.setAttribute("tasks", alltasks);

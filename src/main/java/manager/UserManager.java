@@ -16,7 +16,7 @@ public class UserManager {
 
 
     public boolean addUser(User user) {
-        String sql = "INSERT INTO user(name,surname,email,password,type) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO user(name,surname,email,password,type,picture_url) VALUES(?,?,?,?,?,?)";
         try {
             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, user.getName());
@@ -24,6 +24,8 @@ public class UserManager {
             statement.setString(3, user.getEmail());
             statement.setString(4, user.getPassword());
             statement.setString(5, user.getUserType().name());
+            statement.setString(6, user.getPictureUrl());
+
             statement.executeUpdate();
             ResultSet rs = statement.getGeneratedKeys();
 
@@ -114,6 +116,7 @@ public class UserManager {
                     .email(resultSet.getString(4))
                     .password(resultSet.getString(5))
                     .userType(UserType.valueOf(resultSet.getString(6)))
+                    .pictureUrl(resultSet.getString(7))
                     .build();
         } catch (SQLException e) {
             e.printStackTrace();
