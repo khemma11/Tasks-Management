@@ -20,14 +20,14 @@ public class CommentManager {
 
     public void addComment(Comment comment) throws SQLException {
 
-        String sql = "INSERT INTO comment(`userId`,`taskId`,`comment``date`) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO comment(`userId`,`taskId`,`comment`) VALUES(?,?,?)";
 
 
         PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         statement.setInt(1, comment.getUserId());
         statement.setInt(2, comment.getTaskId());
         statement.setString(3, comment.getComment());
-        statement.setString(4, sdf.format(comment.getDate()));
+
 
 
         statement.executeUpdate();
