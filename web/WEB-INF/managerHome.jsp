@@ -19,11 +19,11 @@
 <% List<Task> tasks = (List<Task>) request.getAttribute("tasks");
 
 %>
-Welcome <%=user.getName()%><%if (user.getPictureUrl()!=null){%>
+Welcome <%=user.getName() + " " + user.getSurName() + " " %>  <% if (user.getPictureUrl()!=null){%>
 
  <img src="/image?path=<%=user.getPictureUrl()%>" width="100px"><%}%>
 <div style="width:600px">
-    <div style="width: 50%;float: left">
+    <div style="jnwidth: 50%;float: left">
         Add User:
         <form action="/register" method="post" enctype="multipart/form-data">
             <p>Name</p>
@@ -85,6 +85,7 @@ Welcome <%=user.getName()%><%if (user.getPictureUrl()!=null){%>
                 <th>SurName</th>
                 <th>Email</th>
                 <th>UserType</th>
+                <th>Pictures</th>
 
             </tr>
             <% for (User user1 : users) { %>
@@ -98,6 +99,10 @@ Welcome <%=user.getName()%><%if (user.getPictureUrl()!=null){%>
                 <td><%=user1.getEmail()%>
                 </td>
                 <td><%=user1.getUserType().name()%>
+                <td><%if (user1.getPictureUrl()!=null){%>
+                <img src="/image?path=<%=user1.getPictureUrl()%>" width="30px"/>
+
+           <% }%>
                 </td>
 
             </tr>
@@ -122,7 +127,7 @@ Welcome <%=user.getName()%><%if (user.getPictureUrl()!=null){%>
                 for (Task task : tasks) { %>
 
             <tr>
-                <td><%=task.getName()%>
+                <td><a href="/taskPage?id=<%=task.getId()%>"><%=task.getName()%></a>
                 </td>
                 <td><%=task.getDescription()%>
                 </td>

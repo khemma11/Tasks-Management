@@ -13,7 +13,7 @@ import java.util.List;
 
 
 public class TaskManager {
-    private manager.UserManager userManager = new manager.UserManager();
+    private UserManager userManager = new UserManager();
     private Connection connection = DBCollectionprovider.getInstance().getConnection();
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -68,6 +68,31 @@ public class TaskManager {
             tasks.add(task);
         }
         return tasks;
+
+    }
+    public Task getAllTasksById(int id) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM task WHERE id = ?");
+        statement.setInt(1, id);
+        ResultSet resultSet = statement.executeQuery();
+
+        while (resultSet.next()) {
+            Task task = new Task();
+            task.setId(resultSet.getInt("id"));
+            task.setName(resultSet.getString("name"));
+            task.setDescription(resultSet.getString("description"));
+            try {
+                task.setDeadline(sdf.parse(resultSet.getString("deadline")));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            task.setStatus(TaskStatus.valueOf(resultSet.getString("status")));
+            task.setUserId(resultSet.getInt("user_id"));
+            task.setUser(userManager.getUserById(task.getUserId()));
+
+
+           return task;
+        }
+        return null;
 
     }
 
@@ -135,7 +160,7 @@ public class TaskManager {
             task.setDeadline(sdf.parse(resultSet.getString("deadline")));
             task.setStatus(TaskStatus.valueOf(resultSet.getString("status").toUpperCase()));
             task.setUserId(resultSet.getInt("user_id"));
-            task.setUser(userManager.getUserById(resultSet.getInt(6)));
+            task.setUser(userManager.getUserById(task.getUserId()));
             tasks.add(task);
 
         }

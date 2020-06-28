@@ -20,7 +20,7 @@
 
     <table border="1">
         <tr>
-            <th>Name</th>
+            <th> Name</th>
             <th>Description</th>
             <th>Deadline</th>
             <th>Status</th>
@@ -32,7 +32,7 @@
             for (Task task : tasks) { %>
 
         <tr>
-            <td><%=task.getName()%>
+            <td><a href="/taskPage?id=<%=task.getId()%>"><%=task.getName()%></a>
             </td>
             <td><%=task.getDescription()%>
             </td>
